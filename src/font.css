@@ -5,3 +5,8 @@
 body {
     font-family: 'Major Mono Display', sans-serif;
 }
+
+
+#root {
+    background-color: black !important;
+}
