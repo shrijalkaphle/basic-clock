@@ -21,16 +21,7 @@ function App() {
   const [time, setTime] = useState<string>(moment().format())
   const [nepaliDate, setNepaliDate] = useState(new NepaliDate())
 
-  const [weatherData, setWeatherData] = useState<IWeatherData>({
-    cloudcover: 25,
-    conditions: "Partially cloudy",
-    datetime: "18:15:00",
-    feelslike: 25,
-    humidity: 61.2,
-    icon: "partly-cloudy-day",
-    temp: 25,
-    windspeed: 11.2
-  })
+  const [weatherData, setWeatherData] = useState<IWeatherData>()
 
   const fullScreenPreivew = () => {
     if (isFullScreen) {
@@ -70,7 +61,7 @@ function App() {
 
     const weatherInterval = setInterval(() => {
       weatherApiRequest()
-    },120000)
+    },300000)
     return () => {
       clearInterval(interval)
       clearInterval(weatherInterval)
@@ -99,15 +90,14 @@ function App() {
             <hr />
             <div className='mt-6 justify-center flex items-center gap-x-4'>
               <div>
-                <img src={`./svgs/${weatherData.icon}.svg`} className='h-42 w-42' />
+                <img src={`./svgs/${weatherData?.icon}.svg`} className='h-42 w-42' />
               </div>
               <div className='text-center'>
-                <div className='text-xl'>{weatherData.conditions}</div>
-                <div className='text-2xl mt-2'>{weatherData.temp}&deg;C <span className='text-lg'>(Feels like {weatherData.feelslike}&deg;C)</span></div>
+                <div className='text-xl'>{weatherData?.conditions}</div>
+                <div className='text-2xl mt-2'>{weatherData?.temp}&deg;C <span className='text-lg'>(Feels like {weatherData?.feelslike}&deg;C)</span></div>
                 <div className='text-lg mt-2'>
-                  <span className='block'>Humidity: {weatherData.humidity}%</span>
-                  <span className='block'>Wind Speed: {weatherData.windspeed} km/h</span>
-                  <span className='block text-sm'>{weatherData.datetime}</span>
+                  <span className='block'>Humidity: {weatherData?.humidity}%</span>
+                  <span className='block'>Wind Speed: {weatherData?.windspeed} km/h</span>
                 </div>
               </div>
             </div>
