@@ -1,18 +1,6 @@
-import axios from 'axios';
 import moment from "moment";
 import { useEffect, useState } from "react";
 import NepaliDate from 'nepali-date-converter'
-
-interface IWeatherData {
-  cloudcover: number
-  conditions: string
-  datetime: string
-  feelslike: number
-  humidity: number
-  icon: string
-  temp: number
-  windspeed: number
-}
 
 function App() {
   const element = document.documentElement
@@ -20,8 +8,6 @@ function App() {
   const [is24Hour, setIs24Hour] = useState<boolean>(false)
   const [time, setTime] = useState<string>(moment().format())
   const [nepaliDate, setNepaliDate] = useState(new NepaliDate())
-
-  const [weatherData, setWeatherData] = useState<IWeatherData>()
 
   const fullScreenPreivew = () => {
     if (isFullScreen) {
@@ -35,15 +21,6 @@ function App() {
         element.requestFullscreen();
     }
   }
-
-  const weatherApiRequest = () => {
-    axios.get('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Kathmandu,NP?key=JT8L6SDRS5CUUM4U338CCBY7E&unitGroup=metric')
-      .then((response) => {
-        console.log(response)
-        setWeatherData(response.data.currentConditions)
-      })
-  }
-
   const HourToggle = () => {
     if (is24Hour) {
       setIs24Hour(false)
@@ -53,19 +30,12 @@ function App() {
   }
 
   useEffect(() => {
-    weatherApiRequest()
     const interval = setInterval(() => {
       setTime(moment().format())
       setNepaliDate(new NepaliDate())
     }, 500);
-
-    const weatherInterval = setInterval(() => {
-      weatherApiRequest()
-    },300000)
-    return () => {
-      clearInterval(interval)
-      clearInterval(weatherInterval)
-    }
+    
+    return () => clearInterval(interval)
   }, [])
 
   return (
@@ -76,6 +46,7 @@ function App() {
           <div className="flex gap-x-3 absolute top-1 right-1">
             <button className="border px-2 py-1 rounded-lg" onClick={fullScreenPreivew}>Toogle Fullscreen</button>
             <button className="border px-2 py-1 rounded-lg" onClick={HourToggle}>24 hour Toogle</button>
+            <button className="border px-2 py-1 rounded-lg" onClick={weatherApiRequest}>wether</button>
           </div>
           <div>
             <div className="flex items-end justify-center">
@@ -87,7 +58,7 @@ function App() {
             <div className="mt-6 text-5xl text-center mb-6">
               {moment().format("dddd | MMMM DD, YYYY")} | {nepaliDate.format("DD MMMM, YYYY").toString()}
             </div>
-            <hr />
+            {/* <hr />
             <div className='mt-6 justify-center flex items-center gap-x-4'>
               <div>
                 <img src={`./svgs/${weatherData?.icon}.svg`} className='h-42 w-42' />
@@ -100,7 +71,7 @@ function App() {
                   <span className='block'>Wind Speed: {weatherData?.windspeed} km/h</span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
