@@ -46,7 +46,6 @@ function App() {
           <div className="flex gap-x-3 absolute top-1 right-1">
             <button className="border px-2 py-1 rounded-lg" onClick={fullScreenPreivew}>Toogle Fullscreen</button>
             <button className="border px-2 py-1 rounded-lg" onClick={HourToggle}>24 hour Toogle</button>
-            <button className="border px-2 py-1 rounded-lg" onClick={weatherApiRequest}>wether</button>
           </div>
           <div>
             <div className="flex items-end justify-center">
