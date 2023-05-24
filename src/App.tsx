@@ -33,6 +33,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(moment().format())
+      setNepaliDate(new NepaliDate())
     }, 500);
     return () => clearInterval(interval)
   }, [])
